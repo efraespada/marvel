@@ -1,2 +1,3 @@
 # marvel
-OpenBank test
+
+MVVM + MVI with Compose and secured apiKeys with SC.
