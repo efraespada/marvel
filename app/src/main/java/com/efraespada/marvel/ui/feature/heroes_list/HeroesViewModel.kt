@@ -3,10 +3,9 @@ package com.efraespada.marvel.ui.feature.heroes_list
 import androidx.lifecycle.viewModelScope
 import com.efraespada.marvel.base.BaseViewModel
 import com.efraespada.marvel.model.data.HeroRepository
-
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HeroesViewModel @Inject constructor(private val repository: HeroRepository) :
@@ -28,11 +27,10 @@ class HeroesViewModel @Inject constructor(private val repository: HeroRepository
     }
 
     private suspend fun getHeroes() {
-        val heroes = repository.getShortHeroes()
+        val heroes = repository.getHeroesList()
         setState {
             copy(heroes = heroes, isLoading = false)
         }
         setEffect { HeroesContract.Effect.DataWasLoaded }
     }
-
 }

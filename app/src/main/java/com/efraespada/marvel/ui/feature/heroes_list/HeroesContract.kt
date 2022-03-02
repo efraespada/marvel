@@ -20,5 +20,4 @@ class HeroesContract {
             data class ToHeroDetails(val heroId: String) : Navigation()
         }
     }
-
 }

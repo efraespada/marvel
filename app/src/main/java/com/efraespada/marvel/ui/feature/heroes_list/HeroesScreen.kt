@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 
-
 @ExperimentalCoilApi
 @Composable
 fun HeroesScreen(
@@ -74,7 +73,6 @@ fun HeroesScreen(
                 LoadingBar()
         }
     }
-
 }
 
 @Composable
@@ -104,11 +102,12 @@ fun HeroesList(
         items(heroItems) { item ->
             HeroItemRow(
                 item = item,
-                itemShouldExpand = true,
+                itemShouldExpand = item.description.isNotEmpty(),
                 onItemClicked = onItemClicked,
                 iconTransformationBuilder = {
                     this.error(R.drawable.ic_launcher_background)
-                })
+                },
+            )
         }
     }
 }

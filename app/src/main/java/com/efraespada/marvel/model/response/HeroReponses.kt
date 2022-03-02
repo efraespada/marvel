@@ -11,7 +11,6 @@ data class HeroesPagination(
 data class ShortHeroResponse(val data: HeroesPagination)
 data class HeroDetailResponse(val data: HeroesPagination)
 
-
 data class Image(
     val path: String,
     val extension: String,

@@ -59,9 +59,11 @@ private fun MarvelApp() {
         }
         composable(
             route = NavigationKeys.Route.HERO_DETAILS,
-            arguments = listOf(navArgument(HERO_ID) {
-                type = NavType.StringType
-            })
+            arguments = listOf(
+                navArgument(HERO_ID) {
+                    type = NavType.StringType
+                }
+            )
         ) {
             HeroDetailScreenComposable()
         }
@@ -79,9 +81,12 @@ private fun HeroesScreenComposable(navController: NavHostController) {
         onEventSent = { event -> viewModel.setEvent(event) },
         onNavigationRequested = { navigationEffect ->
             if (navigationEffect is HeroesContract.Effect.Navigation.ToHeroDetails) {
-                navController.navigate("${NavigationKeys.Route.HERO_LIST}/${navigationEffect.heroId}")
+                navController.navigate(
+                    "${NavigationKeys.Route.HERO_LIST}/${navigationEffect.heroId}"
+                )
             }
-        })
+        }
+    )
 }
 
 @ExperimentalCoilApi
@@ -102,5 +107,4 @@ object NavigationKeys {
         const val HERO_LIST = "heroes_list"
         const val HERO_DETAILS = "$HERO_LIST/{$HERO_ID}"
     }
-
 }

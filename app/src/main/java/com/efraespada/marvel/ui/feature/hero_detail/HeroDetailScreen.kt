@@ -1,6 +1,6 @@
 package com.efraespada.marvel.ui.feature.hero_detail
 
-
+import android.app.Activity
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -28,14 +29,12 @@ import androidx.compose.ui.unit.max
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.efraespada.marvel.R
 import com.efraespada.marvel.model.response.Comic
 import com.efraespada.marvel.model.response.Hero
 import com.stringcare.library.reveal
 import kotlin.math.min
-
 
 @ExperimentalCoilApi
 @Composable
@@ -57,11 +56,7 @@ fun HeroDetailScreen(state: HeroDetailContract.State) {
                 HeroDetailCollapsingToolbar(state.hero, scrollOffset)
             }
             Spacer(modifier = Modifier.height(2.dp))
-            ComicsList(comicItems = state.hero?.comics?.items ?: emptyList()) { itemId ->
-                /**
-                 *
-                 */
-            }
+            ComicsList(comicItems = state.hero?.comics?.items ?: emptyList())
         }
     }
 }
@@ -70,12 +65,15 @@ fun HeroDetailScreen(state: HeroDetailContract.State) {
 private fun HeroAppBar(
     item: Hero?,
 ) {
+    val activity = LocalContext.current as Activity
     val navController = rememberNavController()
     TopAppBar(
         navigationIcon = {
-            IconButton(onClick = {
-                navController.popBackStack()
-            }) {
+            IconButton(
+                onClick = {
+                    if (!navController.popBackStack()) activity.onBackPressed()
+                }
+            ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     modifier = Modifier.padding(horizontal = 12.dp),
@@ -86,7 +84,7 @@ private fun HeroAppBar(
         title = { Text(item?.name ?: "") },
         backgroundColor = MaterialTheme.colors.background,
 
-        )
+    )
 }
 
 @Composable
@@ -156,12 +154,10 @@ private fun HeroDetailCollapsingToolbar(
     }
 }
 
-
 @ExperimentalCoilApi
 @Composable
 fun ComicsList(
     comicItems: List<Comic>,
-    onItemClicked: (id: String) -> Unit = { }
 ) {
     LazyColumn(
         contentPadding = PaddingValues(bottom = 16.dp)
@@ -169,11 +165,7 @@ fun ComicsList(
         items(comicItems) { item ->
             ComicItemRow(
                 item = item,
-                itemShouldExpand = true,
-                onItemClicked = onItemClicked,
-                iconTransformationBuilder = {
-                    this.error(R.drawable.ic_launcher_background)
-                })
+            )
         }
     }
 }
@@ -182,9 +174,6 @@ fun ComicsList(
 @Composable
 fun ComicItemRow(
     item: Comic,
-    itemShouldExpand: Boolean = false,
-    iconTransformationBuilder: ImageRequest.Builder.() -> Unit = { },
-    onItemClicked: (id: String) -> Unit = { }
 ) {
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -201,7 +190,6 @@ fun ComicItemRow(
         Row(modifier = Modifier.animateContentSize()) {
             ComicItemDetails(
                 item = item,
-                expandedLines = 1,
                 modifier = Modifier
                     .padding(
                         start = 8.dp,
@@ -216,11 +204,9 @@ fun ComicItemRow(
     }
 }
 
-
 @Composable
 fun ComicItemDetails(
     item: Comic?,
-    expandedLines: Int,
     modifier: Modifier
 ) {
     Column(modifier = modifier) {
@@ -231,15 +217,5 @@ fun ComicItemDetails(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
-        if (item?.resourceURI?.trim()?.isNotEmpty() == true)
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                Text(
-                    text = item.resourceURI.trim(),
-                    textAlign = TextAlign.Start,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.caption,
-                    maxLines = expandedLines
-                )
-            }
     }
 }

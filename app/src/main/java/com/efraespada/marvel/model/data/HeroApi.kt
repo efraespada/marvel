@@ -1,32 +1,39 @@
 package com.efraespada.marvel.model.data
 
-import com.efraespada.marvel.R
 import com.efraespada.marvel.md5
+import com.efraespada.marvel.model.credentials.CredentialsProvider
+import com.efraespada.marvel.model.credentials.CredentialsProviderImpl
 import com.efraespada.marvel.model.response.HeroDetailResponse
 import com.efraespada.marvel.model.response.ShortHeroResponse
-import com.stringcare.library.reveal
-import com.stringcare.library.string
+import javax.inject.Inject
+import javax.inject.Singleton
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
-class HeroApi @Inject constructor(private val service: Service) {
+class HeroApi @Inject constructor(
+    private val service: Service,
+) {
+    var credentialProvider: CredentialsProvider = CredentialsProviderImpl()
 
     suspend fun getHeroes(): ShortHeroResponse {
         val ts = System.currentTimeMillis().toString()
-        val apiKey = R.string.apiKey.reveal()
-        val privateKey = R.string.privateKey.reveal()
-        return service.getHeroes(ts, apiKey, "$ts$privateKey$apiKey".md5())
+        return service.getHeroes(
+            ts,
+            credentialProvider.getApiKey(),
+            "$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}".md5()
+        )
     }
 
     suspend fun getHeroDetail(id: String): HeroDetailResponse {
         val ts = System.currentTimeMillis().toString()
-        val apiKey = R.string.apiKey.reveal()
-        val privateKey = R.string.privateKey.reveal()
-        return service.getHeroDetail(id, ts, apiKey, "$ts$privateKey$apiKey".md5())
+        return service.getHeroDetail(
+            id,
+            ts,
+            credentialProvider.getApiKey(),
+            "$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}".md5()
+        )
     }
 
     interface Service {
@@ -50,5 +57,3 @@ class HeroApi @Inject constructor(private val service: Service) {
         const val API_URL = "https://gateway.marvel.com"
     }
 }
-
-
