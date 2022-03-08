@@ -29,5 +29,7 @@ class HeroDetailViewModel @Inject constructor(
 
     override fun setInitialState() = HeroDetailContract.State(null)
 
-    override fun handleEvents(event: HeroDetailContract.Event) {}
+    override fun handleEvents(event: HeroDetailContract.Event) {
+        // nothing to do here
+    }
 }

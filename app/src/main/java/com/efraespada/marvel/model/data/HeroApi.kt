@@ -3,8 +3,7 @@ package com.efraespada.marvel.model.data
 import com.efraespada.marvel.md5
 import com.efraespada.marvel.model.credentials.CredentialsProvider
 import com.efraespada.marvel.model.credentials.CredentialsProviderImpl
-import com.efraespada.marvel.model.response.HeroDetailResponse
-import com.efraespada.marvel.model.response.ShortHeroResponse
+import com.efraespada.marvel.model.response.HeroesResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 import retrofit2.http.GET
@@ -17,7 +16,7 @@ class HeroApi @Inject constructor(
 ) {
     var credentialProvider: CredentialsProvider = CredentialsProviderImpl()
 
-    suspend fun getHeroes(): ShortHeroResponse {
+    suspend fun getHeroes(): HeroesResponse {
         val ts = System.currentTimeMillis().toString()
         return service.getHeroes(
             ts,
@@ -26,7 +25,7 @@ class HeroApi @Inject constructor(
         )
     }
 
-    suspend fun getHeroDetail(id: String): HeroDetailResponse {
+    suspend fun getHeroDetail(id: String): HeroesResponse {
         val ts = System.currentTimeMillis().toString()
         return service.getHeroDetail(
             id,
@@ -42,7 +41,7 @@ class HeroApi @Inject constructor(
             @Query("ts") ts: String,
             @Query("apikey") apikey: String,
             @Query("hash") hash: String,
-        ): ShortHeroResponse
+        ): HeroesResponse
 
         @GET("/v1/public/characters/{id}")
         suspend fun getHeroDetail(
@@ -50,7 +49,7 @@ class HeroApi @Inject constructor(
             @Query("ts") ts: String,
             @Query("apikey") apikey: String,
             @Query("hash") hash: String,
-        ): HeroDetailResponse
+        ): HeroesResponse
     }
 
     companion object {
