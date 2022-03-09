@@ -34,7 +34,7 @@ Se ha securizado con [Stringcare](https://github.com/stringcare) tanto la `apiKe
 
 ### Limpieza de codigo
 
-Aunque es un ejemplo de implementación de API muy básico se ha mantenido un desglose de vista, ViewModel y capa de datos con los `@Singleton` de `Hilt` y el formateo de `Ktlint`:
+Aunque es un ejemplo de implementación de API muy básico se ha mantenido un desglose de vista, ViewModel y capa de datos con `Hilt` y el formateo de `Ktlint`:
 
 ```bash
 gradlew ktlintformat
@@ -46,7 +46,10 @@ disabled_rules=no-wildcard-imports,experimental:annotation
 ```
 
 ### Testing
+He incluido test instrumentales:
 
+- `FlowInstrumentedTest`: Test del flujo de la aplicación
+- `SecurityInstrumentedTest`: Test de revelado de `apiKey` y `privateKey`.
 
 
 

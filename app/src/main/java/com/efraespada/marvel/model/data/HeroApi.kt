@@ -1,14 +1,15 @@
 package com.efraespada.marvel.model.data
 
-import com.efraespada.marvel.md5
 import com.efraespada.marvel.model.credentials.CredentialsProvider
 import com.efraespada.marvel.model.credentials.CredentialsProviderImpl
 import com.efraespada.marvel.model.response.HeroesResponse
-import javax.inject.Inject
-import javax.inject.Singleton
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.math.BigInteger
+import java.security.MessageDigest
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 class HeroApi @Inject constructor(
@@ -21,7 +22,7 @@ class HeroApi @Inject constructor(
         return service.getHeroes(
             ts,
             credentialProvider.getApiKey(),
-            "$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}".md5()
+            md5("$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}")
         )
     }
 
@@ -31,7 +32,7 @@ class HeroApi @Inject constructor(
             id,
             ts,
             credentialProvider.getApiKey(),
-            "$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}".md5()
+            md5("$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}")
         )
     }
 
@@ -54,5 +55,11 @@ class HeroApi @Inject constructor(
 
     companion object {
         const val API_URL = "https://gateway.marvel.com"
+    }
+
+    private fun md5(value: String): String {
+        val md = MessageDigest.getInstance("MD5")
+        return BigInteger(1, md.digest(value.toByteArray()))
+            .toString(16).padStart(32, '0')
     }
 }

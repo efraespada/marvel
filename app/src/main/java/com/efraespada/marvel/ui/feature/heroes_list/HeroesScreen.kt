@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,6 +26,7 @@ import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.efraespada.marvel.R
 import com.efraespada.marvel.base.LAUNCH_LISTEN_FOR_EFFECTS
+import com.efraespada.marvel.base.tagHeroItem
 import com.efraespada.marvel.model.response.Hero
 import com.efraespada.marvel.noRippleClickable
 import com.efraespada.marvel.ui.theme.MarvelTheme
@@ -128,6 +130,7 @@ fun HeroItemRow(
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 16.dp)
             .clickable { onItemClicked(item.id) }
+            .testTag(tagHeroItem)
     ) {
         var expanded by remember { mutableStateOf(false) }
         Row(modifier = Modifier.animateContentSize()) {

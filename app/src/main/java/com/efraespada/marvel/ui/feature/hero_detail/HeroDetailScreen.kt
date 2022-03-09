@@ -5,7 +5,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -31,6 +31,9 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.efraespada.marvel.R
+import com.efraespada.marvel.base.tagBack
+import com.efraespada.marvel.base.tagComicItem
+import com.efraespada.marvel.base.tagHeroDetailTabBar
 import com.efraespada.marvel.model.response.Comic
 import com.efraespada.marvel.model.response.Hero
 import com.stringcare.library.reveal
@@ -68,8 +71,10 @@ private fun HeroAppBar(
     val activity = LocalContext.current as Activity
     val navController = rememberNavController()
     TopAppBar(
+        modifier = Modifier.testTag(tagHeroDetailTabBar),
         navigationIcon = {
             IconButton(
+                modifier = Modifier.testTag(tagBack),
                 onClick = {
                     if (!navController.popBackStack()) activity.onBackPressed()
                 }
@@ -77,7 +82,7 @@ private fun HeroAppBar(
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     modifier = Modifier.padding(horizontal = 12.dp),
-                    contentDescription = "Back"
+                    contentDescription = tagBack
                 )
             }
         },
@@ -182,10 +187,7 @@ fun ComicItemRow(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp, top = 16.dp)
-            .clickable {
-                /**
-                 */
-            }
+            .testTag(tagComicItem)
     ) {
         Row(modifier = Modifier.animateContentSize()) {
             ComicItemDetails(
