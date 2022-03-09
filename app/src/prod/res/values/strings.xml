@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><resources>
+<resources>
     <string name="app_name" translatable="false">Marvel</string>
-    <string name="apiKey" translatable="false">48, -83, -59, 52, -83, 113, 112, 99, 28, 30, -20, -22, -30, -43, -53, -39, -8, -56, -61, -77, -38, -26, -82, -76, -45, -88, -96, -53, -39, -51, -100, -42</string>
-    <string name="privateKey" translatable="false">34, 70, 88, -102, 7, -77, -92, 112, 74, 115, 62, 58, -1, 30, -36, 36, 17, -30, -34, -61, -14, -54, -70, -52, -76, -22, -83, -89, -72, -88, -87, -74, -94, -47, -51, -103, -106, -41, -91, -48</string>
+    <string name="apiKey" hidden="true" translatable="false">0dae07fa59576885c504ab94c45ddf0f</string>
+    <string name="privateKey" hidden="true" translatable="false">b1da55b95adf3e0dc740f2494f3233088ff54d9b</string>
 </resources>
