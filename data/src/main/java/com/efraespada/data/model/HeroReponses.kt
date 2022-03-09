@@ -1,6 +1,5 @@
 package com.efraespada.data.model
 
-
 data class HeroesPagination(
     val offset: Int,
     val limit: Int,
@@ -10,4 +9,3 @@ data class HeroesPagination(
 )
 
 data class HeroesResponse(val data: HeroesPagination)
-

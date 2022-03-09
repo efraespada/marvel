@@ -1,10 +1,8 @@
 package com.efraespada.domain.usecase
 
 import com.efraespada.data.data.HeroRepositoryImpl
-import com.efraespada.domain.extenstions.to
 import com.efraespada.domain.extenstions.toList
 import com.efraespada.domain.model.Hero
-import com.google.gson.Gson
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent

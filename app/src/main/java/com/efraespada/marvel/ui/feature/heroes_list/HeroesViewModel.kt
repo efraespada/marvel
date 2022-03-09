@@ -6,8 +6,8 @@ import com.efraespada.domain.usecase.GetHeroesUseCase
 import com.efraespada.marvel.base.BaseViewModel
 import com.efraespada.marvel.model.credentials.CredentialsProviderImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HeroesViewModel @Inject constructor(

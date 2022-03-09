@@ -2,7 +2,6 @@ package com.efraespada.data.interfaces
 
 import com.efraespada.data.model.HeroModel
 
-
 interface HeroRepository {
     suspend fun getHeroesList(
         offset: Int?,

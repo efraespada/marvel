@@ -1,16 +1,16 @@
 package com.efraespada.data.data
 
-import com.efraespada.data.model.HeroesResponse
 import com.efraespada.data.interfaces.HeroApi
+import com.efraespada.data.model.HeroesResponse
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
 import java.math.BigInteger
 import java.security.MessageDigest
 import javax.inject.Inject
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -19,7 +19,8 @@ class HeroApiImpl @Inject constructor(
 ) : HeroApi {
 
     override suspend fun getHeroes(
-        offset: Int, limit: Int,
+        offset: Int,
+        limit: Int,
         apiKey: String,
         privateKey: String,
     ): HeroesResponse {
@@ -27,7 +28,7 @@ class HeroApiImpl @Inject constructor(
         return service.getHeroes(
             ts,
             apiKey,
-            md5("$ts${privateKey}${apiKey}"),
+            md5("$ts${privateKey}$apiKey"),
             offset,
             limit
         )
@@ -43,7 +44,7 @@ class HeroApiImpl @Inject constructor(
             id,
             ts,
             apiKey,
-            md5("$ts${privateKey}${apiKey}")
+            md5("$ts${privateKey}$apiKey")
         )
     }
 

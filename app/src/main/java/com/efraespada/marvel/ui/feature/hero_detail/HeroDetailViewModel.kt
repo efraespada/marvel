@@ -7,17 +7,17 @@ import com.efraespada.marvel.base.BaseViewModel
 import com.efraespada.marvel.model.credentials.CredentialsProviderImpl
 import com.efraespada.marvel.ui.feature.entry.NavigationKeys
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HeroDetailViewModel @Inject constructor(
     private val stateHandle: SavedStateHandle,
     private val getHeroUseCase: GetHeroUseCase,
 ) : BaseViewModel<
-        HeroDetailContract.Event,
-        HeroDetailContract.State,
-        HeroDetailContract.Effect>() {
+    HeroDetailContract.Event,
+    HeroDetailContract.State,
+    HeroDetailContract.Effect>() {
 
     override val credentialsProvider = CredentialsProviderImpl()
 
@@ -39,5 +39,4 @@ class HeroDetailViewModel @Inject constructor(
     override fun handleEvents(event: HeroDetailContract.Event) {
         // nothing to do here
     }
-
 }
