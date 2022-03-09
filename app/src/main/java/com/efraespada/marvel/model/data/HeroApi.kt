@@ -15,7 +15,7 @@ import retrofit2.http.Query
 class HeroApi @Inject constructor(
     private val service: Service,
 ) {
-    private var credentialProvider: CredentialsProvider = CredentialsProviderImpl()
+    var credentialProvider: CredentialsProvider = CredentialsProviderImpl()
 
     suspend fun getHeroes(offset: Int, limit: Int): HeroesResponse {
         val ts = System.currentTimeMillis().toString()

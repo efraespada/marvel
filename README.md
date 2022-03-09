@@ -52,7 +52,7 @@ disabled_rules=no-wildcard-imports,experimental:annotation
 
 ### Build Variants
 
-Se ha definido un `flavorDimension` por entorno generando las buildVariants:
+Se ha definido los entornos de `dev` y `prod` generando las buildVariants:
 
 - `debugDev`
 - `debugProd`
@@ -60,4 +60,13 @@ Se ha definido un `flavorDimension` por entorno generando las buildVariants:
 - `releaseProd`
 
 Los valores de `apiKey` y `privateKey` varían según el tipo de entorno.
+
+
+### Librerías
+
+- Compose
+- Hilt
+- Coil
+- Retrofit
+- Stringcare
 
