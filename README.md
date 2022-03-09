@@ -46,14 +46,18 @@ disabled_rules=no-wildcard-imports,experimental:annotation
 ```
 
 ### Testing
-He incluido test instrumentales:
 
-- `FlowInstrumentedTest`: Test del flujo de la aplicación
-- `SecurityInstrumentedTest`: Test de revelado de `apiKey` y `privateKey`.
+- [`FlowInstrumentedTest`](https://github.com/efraespada/marvel/blob/master/app/src/androidTest/java/com/efraespada/marvel/FlowInstrumentedTest.kt): Test del flujo de la aplicación.
+- [`SecurityInstrumentedTest`](https://github.com/efraespada/marvel/blob/master/app/src/androidTest/java/com/efraespada/marvel/SecurityInstrumentedTest.kt): Test de revelado de `apiKey` y `privateKey`.
 
+### Build Variants
 
+Se ha definido un `flavorDimension` por entorno generando las buildVariants:
 
+- `debugDev`
+- `debugProd`
+- `releaseDev`
+- `releaseProd`
 
-
-
+Los valores de `apiKey` y `privateKey` varían según el tipo de entorno.
 

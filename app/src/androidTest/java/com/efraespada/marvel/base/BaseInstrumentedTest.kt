@@ -3,6 +3,7 @@ package com.efraespada.marvel.base
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.platform.app.InstrumentationRegistry
 import coil.annotation.ExperimentalCoilApi
+import com.efraespada.marvel.BuildConfig
 import com.efraespada.marvel.ui.feature.entry.MainActivity
 import com.stringcare.library.SC
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -38,7 +39,7 @@ open class BaseInstrumentedTest {
     @Test
     fun useAppContext() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        Assert.assertEquals("com.efraespada.marvel", appContext.packageName)
+        Assert.assertEquals(BuildConfig.APPLICATION_ID, appContext.packageName)
     }
 
     fun asyncTimer(delay: Long = 1000) {

@@ -1,0 +1,4 @@
+<resources>
+    <string name="contentDescriptionHero" hidden="true">Imagen en miniatura del héroe</string>
+    <string name="snackHeroInfo" hidden="true">¡Heroes cargados!</string>
+</resources>

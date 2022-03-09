@@ -13,7 +13,7 @@ stringcare {
     debug true
     assetsFiles = ["*.json"]
     stringFiles = ['strings.xml']
-    srcFolders = ['src/main']
+    srcFolders = ['src/main', 'src/dev', 'src/prod']
 }
 
 android {
@@ -54,6 +54,17 @@ android {
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    flavorDimensions 'envType'
+
+    productFlavors {
+        dev {
+            dimension = 'envType'
+            applicationIdSuffix ".dev"
+        }
+        prod {
+            dimension = 'envType'
         }
     }
 }
