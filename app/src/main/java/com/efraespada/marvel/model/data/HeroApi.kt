@@ -15,14 +15,16 @@ import retrofit2.http.Query
 class HeroApi @Inject constructor(
     private val service: Service,
 ) {
-    var credentialProvider: CredentialsProvider = CredentialsProviderImpl()
+    private var credentialProvider: CredentialsProvider = CredentialsProviderImpl()
 
-    suspend fun getHeroes(): HeroesResponse {
+    suspend fun getHeroes(offset: Int, limit: Int): HeroesResponse {
         val ts = System.currentTimeMillis().toString()
         return service.getHeroes(
             ts,
             credentialProvider.getApiKey(),
-            md5("$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}")
+            md5("$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}"),
+            offset,
+            limit
         )
     }
 
@@ -42,6 +44,8 @@ class HeroApi @Inject constructor(
             @Query("ts") ts: String,
             @Query("apikey") apikey: String,
             @Query("hash") hash: String,
+            @Query("offset") offset: Int,
+            @Query("limit") limit: Int,
         ): HeroesResponse
 
         @GET("/v1/public/characters/{id}")

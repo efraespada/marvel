@@ -1,4 +1,8 @@
 <resources>
+    <string name="contentDescriptionAction" hidden="true">Icono de acción</string>
     <string name="contentDescriptionHero" hidden="true">Imagen en miniatura del héroe</string>
-    <string name="snackHeroInfo" hidden="true">¡Heroes cargados!</string>
+    <string name="contentDescriptionExpand" hidden="true">Expandir el elemento de la fila</string>
+    <string name="snackHeroesLoaded" hidden="true">¡Heroes cargados!</string>
+    <string name="snackLoadingMoreHeroes" hidden="true">Cargando más héroes</string>
+    <string name="snackNoMoreHeroes" hidden="true">No hay más héroes</string>
 </resources>

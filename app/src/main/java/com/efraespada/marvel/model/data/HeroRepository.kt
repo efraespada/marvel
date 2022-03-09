@@ -6,9 +6,11 @@ import javax.inject.Singleton
 
 @Singleton
 class HeroRepository @Inject constructor(private val heroApi: HeroApi) {
+    private val initialOffset = 0
+    private val limit = 100
 
-    suspend fun getHeroesList() = try {
-        heroApi.getHeroes().data.results
+    suspend fun getHeroesList(offset: Int = initialOffset) = try {
+        heroApi.getHeroes(offset, limit).data.results
     } catch (e: Exception) {
         emptyList()
     }

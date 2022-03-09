@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="hero_profile_size">88</integer>
+    <integer name="lines_expanded">10</integer>
+    <integer name="lines_expanded_description">6</integer>
+    <integer name="lines_not_expanded">2</integer>
+    <integer name="lines_name">2</integer>
+    <integer name="shape_round">8</integer>
+    <integer name="default_elevation">2</integer>
+    <integer name="default_padding">16</integer>
+    <integer name="item_padding_vertical">24</integer>
+    <integer name="item_padding_horizontal">8</integer>
+    <integer name="default_stroke_width">2</integer>
+    <integer name="minHeaderHeight">72</integer>
+    <integer name="maxHeaderHeight">128</integer>
+    <integer name="padding_icon">12</integer>
+</resources>

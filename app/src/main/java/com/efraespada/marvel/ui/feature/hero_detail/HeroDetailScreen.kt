@@ -34,8 +34,10 @@ import com.efraespada.marvel.R
 import com.efraespada.marvel.base.tagBack
 import com.efraespada.marvel.base.tagComicItem
 import com.efraespada.marvel.base.tagHeroDetailTabBar
+import com.efraespada.marvel.int
 import com.efraespada.marvel.model.response.Comic
 import com.efraespada.marvel.model.response.Hero
+import com.efraespada.marvel.safe
 import com.stringcare.library.reveal
 import kotlin.math.min
 
@@ -55,10 +57,10 @@ fun HeroDetailScreen(state: HeroDetailContract.State) {
         },
     ) {
         Column {
-            Surface(elevation = 4.dp) {
+            Surface(elevation = R.integer.default_elevation.int().dp) {
                 HeroDetailCollapsingToolbar(state.hero, scrollOffset)
             }
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(R.integer.default_stroke_width.int().dp))
             ComicsList(comicItems = state.hero?.comics?.items ?: emptyList())
         }
     }
@@ -81,7 +83,7 @@ private fun HeroAppBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    modifier = Modifier.padding(horizontal = 12.dp),
+                    modifier = Modifier.padding(horizontal = R.integer.padding_icon.int().dp),
                     contentDescription = tagBack
                 )
             }
@@ -118,40 +120,47 @@ private fun HeroDetailCollapsingToolbar(
     hero: Hero?,
     scrollOffset: Float,
 ) {
-    val imageSize by animateDpAsState(targetValue = max(72.dp, 128.dp * scrollOffset))
+    val imageSize by animateDpAsState(
+        targetValue = max(
+            R.integer.minHeaderHeight.int().dp,
+            R.integer.maxHeaderHeight.int().dp * scrollOffset
+        )
+    )
     Column {
         Row {
             Card(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(R.integer.default_padding.int().dp),
                 shape = CircleShape,
                 border = BorderStroke(
-                    width = 2.dp,
+                    width = R.integer.default_stroke_width.int().dp,
                     color = Color.Black
                 ),
-                elevation = 4.dp
+                elevation = R.integer.default_elevation.int().dp
             ) {
                 Image(
                     painter = rememberImagePainter(
-                        data = "${hero?.thumbnail?.path}.${hero?.thumbnail?.extension}".replace(
-                            "http:",
-                            "https:"
-                        ),
+                        data = "${hero?.thumbnail?.path}.${hero?.thumbnail?.extension}".safe(),
                         builder = {
                             transformations(CircleCropTransformation())
                         },
                     ),
-                    modifier = Modifier.size(max(72.dp, imageSize)),
+                    modifier = Modifier.size(max(R.integer.hero_profile_size.int().dp, imageSize)),
                     contentDescription = R.string.contentDescriptionHero.reveal(),
                 )
             }
             HeroDetailItem(
                 item = hero,
-                expandedLines = (kotlin.math.max(3f, scrollOffset * 6)).toInt(),
+                expandedLines = (
+                    kotlin.math.max(
+                        3f,
+                        scrollOffset * R.integer.lines_expanded_description.int()
+                    )
+                    ).toInt(),
                 modifier = Modifier
                     .padding(
-                        end = 16.dp,
-                        top = 16.dp,
-                        bottom = 16.dp
+                        end = R.integer.default_padding.int().dp,
+                        top = R.integer.default_padding.int().dp,
+                        bottom = R.integer.default_padding.int().dp
                     )
                     .fillMaxWidth()
             )
@@ -165,7 +174,7 @@ fun ComicsList(
     comicItems: List<Comic>,
 ) {
     LazyColumn(
-        contentPadding = PaddingValues(bottom = 16.dp)
+        contentPadding = PaddingValues(bottom = R.integer.default_padding.int().dp)
     ) {
         items(comicItems) { item ->
             ComicItemRow(
@@ -181,12 +190,16 @@ fun ComicItemRow(
     item: Comic,
 ) {
     Card(
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(R.integer.shape_round.int().dp),
         backgroundColor = MaterialTheme.colors.surface,
-        elevation = 2.dp,
+        elevation = R.integer.default_elevation.int().dp,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+            .padding(
+                start = R.integer.default_padding.int().dp,
+                end = R.integer.default_padding.int().dp,
+                top = R.integer.default_padding.int().dp
+            )
             .testTag(tagComicItem)
     ) {
         Row(modifier = Modifier.animateContentSize()) {
@@ -194,10 +207,10 @@ fun ComicItemRow(
                 item = item,
                 modifier = Modifier
                     .padding(
-                        start = 8.dp,
-                        end = 8.dp,
-                        top = 24.dp,
-                        bottom = 24.dp
+                        start = R.integer.item_padding_horizontal.int().dp,
+                        end = R.integer.item_padding_horizontal.int().dp,
+                        top = R.integer.item_padding_vertical.int().dp,
+                        bottom = R.integer.item_padding_vertical.int().dp
                     )
                     .fillMaxWidth(0.80f)
                     .align(Alignment.CenterVertically)
@@ -216,7 +229,7 @@ fun ComicItemDetails(
             text = item?.name ?: "",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.subtitle1,
-            maxLines = 2,
+            maxLines = R.integer.lines_name.int(),
             overflow = TextOverflow.Ellipsis
         )
     }
