@@ -1,6 +1,6 @@
 package com.efraespada.marvel.repositories.credentials
 
-import com.efraespada.marvel.model.credentials.CredentialsProvider
+import com.efraespada.data.credentials.CredentialsProvider
 
 class CredentialsProviderImpl : CredentialsProvider {
     override fun getApiKey() = "0dae07fa59576885c504ab94c45ddf0f"

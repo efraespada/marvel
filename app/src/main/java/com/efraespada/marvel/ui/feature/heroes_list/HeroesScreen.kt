@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
+import com.efraespada.domain.model.Hero
 import com.efraespada.marvel.R
 import com.efraespada.marvel.base.LAUNCH_LISTEN_FOR_EFFECTS
 import com.efraespada.marvel.base.tagHeroItem
 import com.efraespada.marvel.int
-import com.efraespada.marvel.model.response.Hero
 import com.efraespada.marvel.noRippleClickable
 import com.efraespada.marvel.safe
 import com.efraespada.marvel.ui.theme.MarvelTheme

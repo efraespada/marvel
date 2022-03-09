@@ -1,7 +1,7 @@
-package com.efraespada.marvel.model.provider
+package com.efraespada.data.provider
 
-import com.efraespada.marvel.model.data.HeroApi
-import com.efraespada.marvel.model.data.HeroApi.Companion.API_URL
+import com.efraespada.data.data.HeroApiImpl
+import com.efraespada.data.data.HeroApiImpl.Companion.API_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @InstallIn(SingletonComponent::class)
 @Module
-class HeroApiProvider {
+class HeroApiImplProvider {
 
     @Provides
     @Singleton
@@ -38,9 +38,9 @@ class HeroApiProvider {
 
     @Provides
     @Singleton
-    fun provideHeroApiService(
+    fun provideHeroApiImplService(
         retrofit: Retrofit
-    ): HeroApi.Service {
-        return retrofit.create(HeroApi.Service::class.java)
+    ): HeroApiImpl.Service {
+        return retrofit.create(HeroApiImpl.Service::class.java)
     }
 }

@@ -30,13 +30,13 @@ import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
+import com.efraespada.domain.model.Comic
+import com.efraespada.domain.model.Hero
 import com.efraespada.marvel.R
 import com.efraespada.marvel.base.tagBack
 import com.efraespada.marvel.base.tagComicItem
 import com.efraespada.marvel.base.tagHeroDetailTabBar
 import com.efraespada.marvel.int
-import com.efraespada.marvel.model.response.Comic
-import com.efraespada.marvel.model.response.Hero
 import com.efraespada.marvel.safe
 import com.stringcare.library.reveal
 import kotlin.math.min

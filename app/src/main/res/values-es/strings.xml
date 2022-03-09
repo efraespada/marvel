@@ -1,8 +1,8 @@
-<resources>
-    <string name="contentDescriptionAction" hidden="true">Icono de acción</string>
-    <string name="contentDescriptionHero" hidden="true">Imagen en miniatura del héroe</string>
-    <string name="contentDescriptionExpand" hidden="true">Expandir el elemento de la fila</string>
-    <string name="snackHeroesLoaded" hidden="true">¡Heroes cargados!</string>
-    <string name="snackLoadingMoreHeroes" hidden="true">Cargando más héroes</string>
-    <string name="snackNoMoreHeroes" hidden="true">No hay más héroes</string>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><resources>
+    <string name="contentDescriptionAction">-55, 20, -77, 105, 67, -46, -2, -3, -86, -19, -44, -45, -42, 40, 19, -38</string>
+    <string name="contentDescriptionHero">-39, -125, -95, 28, -51, -105, 28, 90, 73, -6, 27, 19, 18, -1, -19, 17, 4, -1, -18, -102, -40, -28, -35, -101, -44, 51, 16, -43, -31, -55</string>
+    <string name="contentDescriptionExpand">13, -88, -62, 35, -31, -106, 108, 109, 1, 69, 30, -49, 13, 6, -11, 14, -9, -2, 4, -20, -105, -26, -40, -98, -38, -45, -119, -53, -36, -46, -53</string>
+    <string name="snackHeroesLoaded">-78, -123, -80, 123, 91, 50, 13, 24, -74, -6, -37, -22, -36, -51, -54, -30, -35, -118</string>
+    <string name="snackLoadingMoreHeroes">-37, -110, 16, -91, 106, 75, 33, 40, -57, 21, 74, 38, -12, -105, -40, 65, 28, -28, -31, -55, -46</string>
+    <string name="snackNoMoreHeroes">118, 109, -102, -117, 84, 69, -49, 25, 95, 61, -15, -99, -31, 51, 18, -23, -36, -47, -32</string>
 </resources>

@@ -5,8 +5,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.efraespada.marvel.model.credentials.CredentialsProvider
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 const val LAUNCH_LISTEN_FOR_EFFECTS = "launch-listen-to-effects"
@@ -19,6 +22,8 @@ interface ViewSideEffect
 
 abstract class BaseViewModel<Event : ViewEvent, UiState : ViewState, Effect : ViewSideEffect> :
     ViewModel() {
+
+    abstract val credentialsProvider: CredentialsProvider
 
     private val initialState: UiState by lazy { setInitialState() }
     abstract fun setInitialState(): UiState

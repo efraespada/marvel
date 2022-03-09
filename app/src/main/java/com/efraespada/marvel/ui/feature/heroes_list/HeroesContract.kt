@@ -1,9 +1,9 @@
 package com.efraespada.marvel.ui.feature.heroes_list
 
+import com.efraespada.domain.model.Hero
 import com.efraespada.marvel.base.ViewEvent
 import com.efraespada.marvel.base.ViewSideEffect
 import com.efraespada.marvel.base.ViewState
-import com.efraespada.marvel.model.response.Hero
 
 class HeroesContract {
     sealed class Event : ViewEvent {

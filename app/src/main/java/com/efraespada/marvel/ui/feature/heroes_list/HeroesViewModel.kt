@@ -1,16 +1,20 @@
 package com.efraespada.marvel.ui.feature.heroes_list
 
 import androidx.lifecycle.viewModelScope
+import com.efraespada.domain.model.Hero
+import com.efraespada.domain.usecase.GetHeroesUseCase
 import com.efraespada.marvel.base.BaseViewModel
-import com.efraespada.marvel.model.data.HeroRepository
-import com.efraespada.marvel.model.response.Hero
+import com.efraespada.marvel.model.credentials.CredentialsProviderImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class HeroesViewModel @Inject constructor(private val repository: HeroRepository) :
-    BaseViewModel<HeroesContract.Event, HeroesContract.State, HeroesContract.Effect>() {
+class HeroesViewModel @Inject constructor(
+    private val getHeroesUseCase: GetHeroesUseCase,
+) : BaseViewModel<HeroesContract.Event, HeroesContract.State, HeroesContract.Effect>() {
+
+    override val credentialsProvider = CredentialsProviderImpl()
 
     private val initialIndex = 0
 
@@ -42,7 +46,11 @@ class HeroesViewModel @Inject constructor(private val repository: HeroRepository
             setEffect { HeroesContract.Effect.LoadingMoreData }
         }
 
-        val heroes = repository.getHeroesList(offset)
+        val heroes = getHeroesUseCase(
+            offset,
+            credentialsProvider.getApiKey(),
+            credentialsProvider.getPrivateKey(),
+        )
         moreData = heroes.isNotEmpty()
 
         if (!moreData) {
