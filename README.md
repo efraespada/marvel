@@ -1,4 +1,4 @@
-# marvel
+# Marvel Sample
 
 Ejemplo de integración securizada de API de Marvel con Android Compose, MVI+ViewModel.
 
@@ -68,5 +68,6 @@ Los valores de `apiKey` y `privateKey` varían según el tipo de entorno.
 - Hilt
 - Coil
 - Retrofit
+- Gson
 - Stringcare
 
