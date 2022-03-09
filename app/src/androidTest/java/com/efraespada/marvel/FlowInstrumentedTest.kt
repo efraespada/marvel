@@ -57,5 +57,4 @@ class FlowInstrumentedTest : BaseInstrumentedTest() {
         asyncTimer(delay)
         composeTestRule.onNodeWithText(R.string.app_name.string()).assertIsDisplayed()
     }
-
 }

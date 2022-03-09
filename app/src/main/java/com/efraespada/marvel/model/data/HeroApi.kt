@@ -3,13 +3,13 @@ package com.efraespada.marvel.model.data
 import com.efraespada.marvel.model.credentials.CredentialsProvider
 import com.efraespada.marvel.model.credentials.CredentialsProviderImpl
 import com.efraespada.marvel.model.response.HeroesResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
 import java.math.BigInteger
 import java.security.MessageDigest
 import javax.inject.Inject
 import javax.inject.Singleton
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 @Singleton
 class HeroApi @Inject constructor(

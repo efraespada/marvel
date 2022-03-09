@@ -8,12 +8,12 @@ import com.efraespada.marvel.ui.feature.entry.MainActivity
 import com.stringcare.library.SC
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import java.util.*
+import kotlin.concurrent.schedule
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.util.*
-import kotlin.concurrent.schedule
 
 @ExperimentalCoilApi
 @HiltAndroidTest
