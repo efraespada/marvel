@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name" translatable="false">Marvel Dev</string>
+    <string name="apiKey" hidden="true" translatable="false">e71ada9b713240ffab860cd8658f7279</string>
+    <string name="privateKey" hidden="true" translatable="false">26e0bd26e70c887184e9fee266840c41f036d9b4</string>
+</resources>

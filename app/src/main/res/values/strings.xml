@@ -1,7 +1,11 @@
 <resources>
-    <string name="app_name">Marvel</string>
-    <string name="apiKey" hidden="true">0dae07fa59576885c504ab94c45ddf0f</string>
-    <string name="privateKey" hidden="true">b1da55b95adf3e0dc740f2494f3233088ff54d9b</string>
+    <string name="app_name" translatable="false" />
+    <string name="apiKey" translatable="false" />
+    <string name="privateKey" translatable="false" />
+    <string name="contentDescriptionAction" hidden="true">Action icon</string>
     <string name="contentDescriptionHero" hidden="true">Hero thumbnail picture</string>
-    <string name="snackHeroInfo" hidden="true">Heroes ready!</string>
+    <string name="contentDescriptionExpand" hidden="true">Expand row icon</string>
+    <string name="snackHeroesLoaded" hidden="true">Heroes ready!</string>
+    <string name="snackLoadingMoreHeroes" hidden="true">Loading more heroes</string>
+    <string name="snackNoMoreHeroes" hidden="true">No more heroes to show</string>
 </resources>

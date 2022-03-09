@@ -1,32 +1,41 @@
 package com.efraespada.marvel.model.data
 
-import com.efraespada.marvel.R
-import com.efraespada.marvel.md5
-import com.efraespada.marvel.model.response.HeroDetailResponse
-import com.efraespada.marvel.model.response.ShortHeroResponse
-import com.stringcare.library.reveal
-import com.stringcare.library.string
+import com.efraespada.marvel.model.credentials.CredentialsProvider
+import com.efraespada.marvel.model.credentials.CredentialsProviderImpl
+import com.efraespada.marvel.model.response.HeroesResponse
+import java.math.BigInteger
+import java.security.MessageDigest
+import javax.inject.Inject
+import javax.inject.Singleton
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
-class HeroApi @Inject constructor(private val service: Service) {
+class HeroApi @Inject constructor(
+    private val service: Service,
+) {
+    var credentialProvider: CredentialsProvider = CredentialsProviderImpl()
 
-    suspend fun getHeroes(): ShortHeroResponse {
+    suspend fun getHeroes(offset: Int, limit: Int): HeroesResponse {
         val ts = System.currentTimeMillis().toString()
-        val apiKey = R.string.apiKey.reveal()
-        val privateKey = R.string.privateKey.reveal()
-        return service.getHeroes(ts, apiKey, "$ts$privateKey$apiKey".md5())
+        return service.getHeroes(
+            ts,
+            credentialProvider.getApiKey(),
+            md5("$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}"),
+            offset,
+            limit
+        )
     }
 
-    suspend fun getHeroDetail(id: String): HeroDetailResponse {
+    suspend fun getHeroDetail(id: String): HeroesResponse {
         val ts = System.currentTimeMillis().toString()
-        val apiKey = R.string.apiKey.reveal()
-        val privateKey = R.string.privateKey.reveal()
-        return service.getHeroDetail(id, ts, apiKey, "$ts$privateKey$apiKey".md5())
+        return service.getHeroDetail(
+            id,
+            ts,
+            credentialProvider.getApiKey(),
+            md5("$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}")
+        )
     }
 
     interface Service {
@@ -35,7 +44,9 @@ class HeroApi @Inject constructor(private val service: Service) {
             @Query("ts") ts: String,
             @Query("apikey") apikey: String,
             @Query("hash") hash: String,
-        ): ShortHeroResponse
+            @Query("offset") offset: Int,
+            @Query("limit") limit: Int,
+        ): HeroesResponse
 
         @GET("/v1/public/characters/{id}")
         suspend fun getHeroDetail(
@@ -43,12 +54,16 @@ class HeroApi @Inject constructor(private val service: Service) {
             @Query("ts") ts: String,
             @Query("apikey") apikey: String,
             @Query("hash") hash: String,
-        ): HeroDetailResponse
+        ): HeroesResponse
     }
 
     companion object {
         const val API_URL = "https://gateway.marvel.com"
     }
+
+    private fun md5(value: String): String {
+        val md = MessageDigest.getInstance("MD5")
+        return BigInteger(1, md.digest(value.toByteArray()))
+            .toString(16).padStart(32, '0')
+    }
 }
-
-

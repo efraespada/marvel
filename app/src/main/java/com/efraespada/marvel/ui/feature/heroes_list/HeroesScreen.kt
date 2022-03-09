@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,14 +27,16 @@ import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.efraespada.marvel.R
 import com.efraespada.marvel.base.LAUNCH_LISTEN_FOR_EFFECTS
+import com.efraespada.marvel.base.tagHeroItem
+import com.efraespada.marvel.int
 import com.efraespada.marvel.model.response.Hero
 import com.efraespada.marvel.noRippleClickable
+import com.efraespada.marvel.safe
 import com.efraespada.marvel.ui.theme.MarvelTheme
 import com.stringcare.library.reveal
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
-
 
 @ExperimentalCoilApi
 @Composable
@@ -44,18 +48,27 @@ fun HeroesScreen(
 ) {
     val scaffoldState: ScaffoldState = rememberScaffoldState()
 
-    // Listen for side effects from the VM
     LaunchedEffect(LAUNCH_LISTEN_FOR_EFFECTS) {
         effectFlow?.onEach { effect ->
             when (effect) {
                 is HeroesContract.Effect.DataWasLoaded ->
                     scaffoldState.snackbarHostState.showSnackbar(
-                        message = R.string.snackHeroInfo.reveal(),
+                        message = R.string.snackHeroesLoaded.reveal(),
                         duration = SnackbarDuration.Short
                     )
                 is HeroesContract.Effect.Navigation.ToHeroDetails -> onNavigationRequested(
                     effect
                 )
+                is HeroesContract.Effect.LoadingMoreData ->
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = R.string.snackLoadingMoreHeroes.reveal(),
+                        duration = SnackbarDuration.Short
+                    )
+                is HeroesContract.Effect.NoMoreDataToShow ->
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = R.string.snackNoMoreHeroes.reveal(),
+                        duration = SnackbarDuration.Short
+                    )
             }
         }?.collect()
     }
@@ -67,14 +80,19 @@ fun HeroesScreen(
         },
     ) {
         Box {
-            HeroesList(heroItems = state.heroes) { itemId ->
-                onEventSent(HeroesContract.Event.HeroSelection(itemId))
-            }
+            HeroesList(
+                heroItems = state.heroes,
+                onItemClicked = { itemId ->
+                    onEventSent(HeroesContract.Event.HeroSelection(itemId))
+                },
+                endOfList = {
+                    onEventSent(HeroesContract.Event.ListAtEnt)
+                }
+            )
             if (state.isLoading)
                 LoadingBar()
         }
     }
-
 }
 
 @Composable
@@ -83,8 +101,8 @@ private fun HeroesAppBar() {
         navigationIcon = {
             Icon(
                 imageVector = Icons.Default.Home,
-                modifier = Modifier.padding(horizontal = 12.dp),
-                contentDescription = "Action icon"
+                modifier = Modifier.padding(horizontal = R.integer.default_padding.int().dp),
+                contentDescription = R.string.contentDescriptionAction.reveal()
             )
         },
         title = { Text(stringResource(R.string.app_name)) },
@@ -96,19 +114,26 @@ private fun HeroesAppBar() {
 @Composable
 fun HeroesList(
     heroItems: List<Hero>,
-    onItemClicked: (id: String) -> Unit = { }
+    onItemClicked: (id: String) -> Unit = { },
+    endOfList: () -> Unit = {},
 ) {
+    val listState = rememberLazyListState()
     LazyColumn(
-        contentPadding = PaddingValues(bottom = 16.dp)
+        contentPadding = PaddingValues(bottom = R.integer.default_padding.int().dp),
+        state = listState
     ) {
         items(heroItems) { item ->
+            if (heroItems.last() == item) {
+                endOfList()
+            }
             HeroItemRow(
                 item = item,
-                itemShouldExpand = true,
+                itemShouldExpand = item.description.isNotEmpty(),
                 onItemClicked = onItemClicked,
                 iconTransformationBuilder = {
                     this.error(R.drawable.ic_launcher_background)
-                })
+                },
+            )
         }
     }
 }
@@ -122,13 +147,18 @@ fun HeroItemRow(
     onItemClicked: (id: String) -> Unit = { }
 ) {
     Card(
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(R.integer.shape_round.int().dp),
         backgroundColor = MaterialTheme.colors.surface,
-        elevation = 2.dp,
+        elevation = R.integer.default_elevation.int().dp,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+            .padding(
+                start = R.integer.default_padding.int().dp,
+                end = R.integer.default_padding.int().dp,
+                top = R.integer.default_padding.int().dp
+            )
             .clickable { onItemClicked(item.id) }
+            .testTag(tagHeroItem)
     ) {
         var expanded by remember { mutableStateOf(false) }
         Row(modifier = Modifier.animateContentSize()) {
@@ -140,13 +170,16 @@ fun HeroItemRow(
             }
             HeroItemDetails(
                 item = item,
-                expandedLines = if (expanded) 10 else 2,
+                expandedLines = when {
+                    expanded -> R.integer.lines_expanded.int()
+                    else -> R.integer.lines_not_expanded.int()
+                },
                 modifier = Modifier
                     .padding(
-                        start = 8.dp,
-                        end = 8.dp,
-                        top = 24.dp,
-                        bottom = 24.dp
+                        start = R.integer.item_padding_horizontal.int().dp,
+                        end = R.integer.item_padding_horizontal.int().dp,
+                        top = R.integer.item_padding_vertical.int().dp,
+                        bottom = R.integer.item_padding_vertical.int().dp
                     )
                     .fillMaxWidth(0.80f)
                     .align(Alignment.CenterVertically)
@@ -166,13 +199,13 @@ fun HeroItemRow(
 @Composable
 private fun ExpandableContentIcon(expanded: Boolean) {
     Icon(
-        imageVector = if (expanded)
-            Icons.Filled.KeyboardArrowUp
-        else
-            Icons.Filled.KeyboardArrowDown,
-        contentDescription = "Expand row icon",
+        imageVector = when {
+            expanded -> Icons.Filled.KeyboardArrowUp
+            else -> Icons.Filled.KeyboardArrowDown
+        },
+        contentDescription = R.string.contentDescriptionExpand.reveal(),
         modifier = Modifier
-            .padding(all = 16.dp)
+            .padding(all = R.integer.default_padding.int().dp)
     )
 }
 
@@ -187,7 +220,7 @@ fun HeroItemDetails(
             text = item?.name ?: "",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.subtitle1,
-            maxLines = 2,
+            maxLines = R.integer.lines_name.int(),
             overflow = TextOverflow.Ellipsis
         )
         if (item?.description?.trim()?.isNotEmpty() == true)
@@ -211,12 +244,16 @@ fun HeroItemThumbnail(
 ) {
     Image(
         painter = rememberImagePainter(
-            data = thumbnailUrl.replace("http:", "https:"),
+            data = thumbnailUrl.safe(),
             builder = iconTransformationBuilder
         ),
         modifier = Modifier
-            .size(88.dp)
-            .padding(start = 16.dp, top = 16.dp, bottom = 16.dp),
+            .size(R.integer.hero_profile_size.int().dp)
+            .padding(
+                start = R.integer.default_padding.int().dp,
+                top = R.integer.default_padding.int().dp,
+                bottom = R.integer.default_padding.int().dp
+            ),
         contentDescription = R.string.contentDescriptionHero.reveal(),
     )
 }

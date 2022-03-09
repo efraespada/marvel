@@ -8,6 +8,7 @@ import com.efraespada.marvel.model.response.Hero
 class HeroesContract {
     sealed class Event : ViewEvent {
         data class HeroSelection(val heroId: String) : Event()
+        object ListAtEnt : Event()
     }
 
     data class State(val heroes: List<Hero> = listOf(), val isLoading: Boolean = false) :
@@ -16,9 +17,12 @@ class HeroesContract {
     sealed class Effect : ViewSideEffect {
         object DataWasLoaded : Effect()
 
+        object LoadingMoreData : Effect()
+
+        object NoMoreDataToShow : Effect()
+
         sealed class Navigation : Effect() {
             data class ToHeroDetails(val heroId: String) : Navigation()
         }
     }
-
 }

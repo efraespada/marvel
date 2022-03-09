@@ -8,9 +8,7 @@ data class HeroesPagination(
     val results: List<Hero>
 )
 
-data class ShortHeroResponse(val data: HeroesPagination)
-data class HeroDetailResponse(val data: HeroesPagination)
-
+data class HeroesResponse(val data: HeroesPagination)
 
 data class Image(
     val path: String,

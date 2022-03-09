@@ -1,25 +1,22 @@
 package com.efraespada.marvel.ui.feature.hero_detail
 
 import androidx.lifecycle.SavedStateHandle
-
 import androidx.lifecycle.viewModelScope
-import com.efraespada.marvel.ui.feature.entry.NavigationKeys
 import com.efraespada.marvel.base.BaseViewModel
-
 import com.efraespada.marvel.model.data.HeroRepository
+import com.efraespada.marvel.ui.feature.entry.NavigationKeys
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
-
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HeroDetailViewModel @Inject constructor(
     private val stateHandle: SavedStateHandle,
     private val repository: HeroRepository
 ) : BaseViewModel<
-        HeroDetailContract.Event,
-        HeroDetailContract.State,
-        HeroDetailContract.Effect>() {
+    HeroDetailContract.Event,
+    HeroDetailContract.State,
+    HeroDetailContract.Effect>() {
 
     init {
         viewModelScope.launch {
@@ -32,6 +29,7 @@ class HeroDetailViewModel @Inject constructor(
 
     override fun setInitialState() = HeroDetailContract.State(null)
 
-    override fun handleEvents(event: HeroDetailContract.Event) {}
-
+    override fun handleEvents(event: HeroDetailContract.Event) {
+        // nothing to do here
+    }
 }
