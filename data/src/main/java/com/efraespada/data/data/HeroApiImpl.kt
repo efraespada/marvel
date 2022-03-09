@@ -1,40 +1,50 @@
-package com.efraespada.marvel.model.data
+package com.efraespada.data.data
 
-import com.efraespada.marvel.model.credentials.CredentialsProvider
-import com.efraespada.marvel.model.credentials.CredentialsProviderImpl
-import com.efraespada.marvel.model.response.HeroesResponse
+import com.efraespada.data.interfaces.HeroApi
+import com.efraespada.data.model.HeroesResponse
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import java.math.BigInteger
 import java.security.MessageDigest
 import javax.inject.Inject
-import javax.inject.Singleton
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-@Singleton
-class HeroApi @Inject constructor(
+@Module
+@InstallIn(SingletonComponent::class)
+class HeroApiImpl @Inject constructor(
     private val service: Service,
-) {
-    var credentialProvider: CredentialsProvider = CredentialsProviderImpl()
+) : HeroApi {
 
-    suspend fun getHeroes(offset: Int, limit: Int): HeroesResponse {
+    override suspend fun getHeroes(
+        offset: Int,
+        limit: Int,
+        apiKey: String,
+        privateKey: String,
+    ): HeroesResponse {
         val ts = System.currentTimeMillis().toString()
         return service.getHeroes(
             ts,
-            credentialProvider.getApiKey(),
-            md5("$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}"),
+            apiKey,
+            md5("$ts${privateKey}$apiKey"),
             offset,
             limit
         )
     }
 
-    suspend fun getHeroDetail(id: String): HeroesResponse {
+    override suspend fun getHeroDetail(
+        id: String,
+        apiKey: String,
+        privateKey: String,
+    ): HeroesResponse {
         val ts = System.currentTimeMillis().toString()
         return service.getHeroDetail(
             id,
             ts,
-            credentialProvider.getApiKey(),
-            md5("$ts${credentialProvider.getPrivateKey()}${credentialProvider.getApiKey()}")
+            apiKey,
+            md5("$ts${privateKey}$apiKey")
         )
     }
 

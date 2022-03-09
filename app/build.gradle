@@ -5,7 +5,6 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
-apply plugin: 'com.android.application'
 apply plugin: StringCare
 
 // default config
@@ -17,14 +16,14 @@ stringcare {
 }
 
 android {
-    compileSdk 31
+    compileSdk rootProject.ext.compileSdk
 
     defaultConfig {
         applicationId "com.efraespada.marvel"
-        minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        minSdk rootProject.ext.minSdk
+        targetSdk rootProject.ext.targetSdk
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
 
         testInstrumentationRunner "com.efraespada.marvel.runner.MarvelTestRunner"
         vectorDrawables {
@@ -70,6 +69,7 @@ android {
 }
 
 dependencies {
+    implementation project(':domain')
 
     implementation "androidx.core:core-ktx:$core_ktx"
     implementation "androidx.appcompat:appcompat:$appcompat"
@@ -89,15 +89,6 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
     implementation "io.github.stringcare:library:$stringcare_version"
-
-    /**
-     * Retrofit
-     */
-    implementation "com.squareup.retrofit2:retrofit:$retrofit"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$adapter_rxjava2"
-    implementation "com.google.code.gson:gson:$gson"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
-
 
     /**
      * Testing
